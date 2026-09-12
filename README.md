@@ -17,7 +17,7 @@ This repository contains the source code for my personal website, built with **A
 
 This website is built on top of the fabulous 🏞️ **Fuwari** theme.
 
-If you'd like to create your own site, check out the original project:
+If you'd like to create your own site, feel free to fork also check out the original project:
 
 **Fuwari:** https://github.com/saicaca/fuwari
 
