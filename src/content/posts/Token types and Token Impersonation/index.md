@@ -8,7 +8,7 @@ tags:
   - Thread Hijacking
   - Access Tokens
 draft: false
-category: ""
+category: "Windows"
 image: ""
 aliases:
   - tokens-and-token-impersonation

@@ -7,7 +7,7 @@ tags:
   - Dynamic Link Library
   - Executables
 draft: false
-category: ""
+category: "Windows"
 image: ""
 updated: 2026-07-09
 aliases:
