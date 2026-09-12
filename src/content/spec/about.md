@@ -1,3 +1,4 @@
 # About
 
-Curently Emptyyyyyyyy!!!!
+
+Let's see when I'd put something here...
