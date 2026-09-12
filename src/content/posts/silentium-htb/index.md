@@ -13,6 +13,7 @@ image: "./silentium.png"
 aliases:
 ---
 
+![silentium](silentium.png)
 
 Silentium.... Exploit the **Account Takeover (ATO)** vulnerability and **RCE** for initial foothold. From there,  ssh as ben with credentials found. Gogs is running locally, port forward using ssh and exploit the Gogs symlink vulnerability to gain the root access to the target
 

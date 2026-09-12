@@ -1,7 +1,7 @@
 ---
 title: What are Dynamic Link Library(.dll) and Executables(.exe)?
 published: 2026-07-09
-description: Lets understand from offensive security perspective
+description: use cases and comparision
 tags:
   - Windows Internals
   - Dynamic Link Library
