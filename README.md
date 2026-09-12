@@ -4,6 +4,7 @@
 
 **Live Site:** https://0xz1nn.github.io
 
+If you'd like to create your own site, feel free to fork my [repo](https://github.com/0xz1nn/0xz1nn.github.io).
 
 
 ## About
@@ -13,11 +14,12 @@ This repository contains the source code for my personal website, built with **A
 
 
 
+
 ## Credits
 
 This website is built on top of the fabulous 🏞️ **Fuwari** theme.
 
-If you'd like to create your own site, feel free to fork this repo or check out the original project:
+Check out the original project:
 
 **Fuwari:** https://github.com/saicaca/fuwari
 
