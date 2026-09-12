@@ -7,7 +7,7 @@ tags:
   - Silentium
   - HTB
   - Writeup
-draft: true
+draft: false
 category: "HTB"
 image: "./silentium.png"
 aliases:
