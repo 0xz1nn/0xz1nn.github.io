@@ -124,9 +124,9 @@ by Ben "epi" Risher 🤓                 ver: 2.13.1
 [####################] - 2m     30000/30000   211/s   http://10.129.95.152/
 ```
 
->[!tip]Correction
->The reason the scan returned me `found:0` because, I had passed the target Ip address here rather than the domain name of the target although the scan didn't lead me to a rabbit hole.
-
+:::important
+Edit: I realised the scan returned me `found:0` because, I had passed the target Ip address here rather than the domain name of the target, although the scan didn't lead me to a rabbit hole.
+:::
 What could be other potential vector to look at, at this point other subdomains? (I already did full port scan, no new ports were discovered!)
 
 **⮇**
