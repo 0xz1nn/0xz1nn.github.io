@@ -125,7 +125,7 @@ by Ben "epi" Risher 🤓                 ver: 2.13.1
 ```
 
 :::important
-Edit: I realised the scan returned me `found:0` because, I had passed the target Ip address here rather than the domain name of the target, although the scan didn't lead me to a rabbit hole.
+Edit: I realised the scan returned me `found:0` because, I had passed the target Ip address here, rather than the domain name of the target, although the scan didn't lead me to a rabbit hole.
 :::
 What could be other potential vector to look at, at this point other subdomains? (I already did full port scan, no new ports were discovered!)
 
@@ -554,5 +554,3 @@ ben@silentium:/opt/gogs/gogs$ ps aux | grep root
 
 root        1481  0.1  3.3 2716984 133560 ?      Ssl  07:23   0:55 /opt/gogs/gogs/gogs web
 ```
-
-![Silentium Pwned...](silentium-pwned.png)

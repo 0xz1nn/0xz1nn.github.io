@@ -18,7 +18,7 @@ SmartHire....  a publicly exposed Vhost led to the authentication page of the ML
 
 ## Port Scan
 
-Nmap scan with `-sC` for default script scan `-sV` for service version `-oA` flag for output in all formats (.nmap, .gnmap, .xml) and finally `-v` to print the open ports as the scan discovers which exposes ports 22, 80.
+Nmap scan with `-sC` for default script scan `-sV` for service version `-oA` flag for output in all formats (.nmap, .gnmap, .xml) and finally `-v` to print the open ports as the scan discovers which exposes ports `22`,`80`.
 
 ```shell wrap=false collapse={10-40}
 0xz1nn ✦ ~/Documents/htb/smarthire
@@ -421,5 +421,3 @@ cat root.txt
 9b43****5212****6811****3eb5****
 root@smarthire:~#
 ```
-
-![smarthire pwned](smarthire-pwned.png)
