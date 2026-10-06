@@ -2,7 +2,7 @@
 title: SmartHire [HTB]
 updated: 2026-09-27
 published: 2026-09-27
-description: " SmartHire is a Medium rated Linux box.... (which is easy to pwn)"
+description: " SmartHire is a Medium rated Linux Machine.... (which is easy to pwn)"
 tags:
   - SmartHire
 draft: false

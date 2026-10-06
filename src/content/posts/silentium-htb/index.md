@@ -2,7 +2,7 @@
 title: Silentium [HTB]
 updated: 2026-09-13
 published: 2026-09-13
-description: Silentium is an easy rated Linux box....
+description: Silentium is an Easy rated Linux Machine....
 tags:
   - Silentium
 draft: false

