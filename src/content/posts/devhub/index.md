@@ -215,7 +215,7 @@ mcp-dev
 
 I was curious to check if there are any other ports are listening on the localhost other than `8888` which is stated on the website.
 
-``` wrap=false
+```shell wrap=false
 mcp-dev@devhub:/home$ ss -lntup
 ss -lntup
 Netid State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
@@ -243,16 +243,16 @@ ps auxww
 
 the `ww` flag gives the full output without being truncated.
 ![processes](processes.png)
-Analyzing the output, there are two interesting processes.
+Analyzing the output, there are two interesting processes :
 
-1. Process running as Analyst user exposed the app token
+- Process running as Analyst user exposed the app token
 
 ```shell wrap=false
 analyst     1085  0.0  2.4 183052 97656 ?        Ss   08:32   0:07 /home/analyst/jupyter-env/bin/python3 /home/analyst/jupyter-env/bin/jupyter-lab --ip=127.0.0.1 --port=8888 --no-browser --
 notebook-dir=/home/analyst/notebooks --ServerApp.token=a7f3b2c9d8e1f4a5b6c7d8e9f0a1b2c3d4e5f6a7 --ServerApp.password= --ServerApp.allow_origin= --ServerApp.disable_check_xsrf=False 
 ```
 
-1. There is also a root process running `server.py` script from the Analyst user directory.
+- There is also a root process running `server.py` script from the Analyst user directory.
 
 ## Reverse Port Forward - Chisel
 
@@ -613,12 +613,12 @@ ssh to target with the root keys to get shell as root.
 
 ```shell wrap=false collapse={7-40}
 0xz1nn ✦ ~/Documents/htb/devhub
-❯ ssh -i root.key root@10.129.245.216
-The authenticity of host '10.129.245.216 (10.129.245.216)' can't be established.
+❯ ssh -i root.key root@10.129.57.200
+The authenticity of host '10.129.245.216 (10.129.57.200)' can't be established.
 ED25519 key fingerprint is: SHA256:K64LcxfMoWF9TY77Q+quN1nvBzFftQ11ZxoH8eULpCs
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '10.129.245.216' (ED25519) to the list of known hosts.
+Warning: Permanently added '10.129.57.200' (ED25519) to the list of known hosts.
 Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-179-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
@@ -633,7 +633,7 @@ Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-179-generic x86_64)
   Swap usage:            0%
   Processes:             232
   Users logged in:       0
-  IPv4 address for eth0: 10.129.245.216
+  IPv4 address for eth0: 10.129.57.200
   IPv6 address for eth0: dead:beef::250:56ff:feb9:fddf
 
  * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
