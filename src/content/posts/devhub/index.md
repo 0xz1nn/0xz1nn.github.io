@@ -278,6 +278,10 @@ Chisel  with **client**  argument sends connection to the server at `10.10.14.21
 - `5000:localhost:5000` **»** port forward `5000` on the localhost (`127.0.0.1`) and bind it to port `5000` on the server.
 The same goes for `R:8888:localhost:8888`.
 
+
+#### Tunnel Vision
+Let the diagram dispel the befog!
+![fun time](fun-time.png)
 ## Port Scan - (After chisel)
 
 I could access the forwarded ports through my machine at `127.0.0.1`address.
